@@ -1,11 +1,14 @@
 from playwright.sync_api import sync_playwright
 from supabase import create_client, Client
+import os
 
 # Supabase Configuration
-SUPABASE_URL = "https://bqffurypbsbmcuvlsmll.supabase.co"  # Replace with your Supabase URL
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJxZmZ1cnlwYnNibWN1dmxzbWxsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY3MjQ2MTQsImV4cCI6MjA1MjMwMDYxNH0.QQKl807jEVhOhlCzItIu_Z240LI9mFU0-h0TOFBTTis"  # Replace with your Supabase API Key
-supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+SUPABASE_URL = "https://bqffurypbsbmcuvlsmll.supabase.co"
+SUPABASE_KEY = os.getenv('SUPABASE_KEY')
+if not SUPABASE_KEY:
+    raise ValueError("No API key provided. Please set the API_KEY environment variable.")
 
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 def scrape_leaderboard(url_character_name: str, db_character_name: str):
     """
