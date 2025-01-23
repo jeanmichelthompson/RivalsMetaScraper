@@ -1,2 +1,2 @@
 playwright
-supabase-py
+supabase
