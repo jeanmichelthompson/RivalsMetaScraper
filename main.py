@@ -40,6 +40,10 @@ def scrape_leaderboard(url_character_name: str, db_character_name: str):
             # Extract leaderboard data for the current page
             rows = page.query_selector_all("div.leaderboard-table tr[class^='rank']")
             for row in rows:
+                #Extract player id
+                id_element = row.query_selector("a.profile")
+                player_id = id_element.get_attribute('href')[8:] if id_element else "Unknown"
+
                 # Extract player name
                 name_element = row.query_selector("div.name")
                 player_name = name_element.inner_text() if name_element else "Unknown"
@@ -68,7 +72,8 @@ def scrape_leaderboard(url_character_name: str, db_character_name: str):
                     "player_name": player_name,
                     "rank_name": rank_name,
                     "score": rank_score,
-                    "matches": matches_played
+                    "matches": matches_played,
+                    "player_id": player_id
                 })
 
             # Find the "Next" button in pagination
