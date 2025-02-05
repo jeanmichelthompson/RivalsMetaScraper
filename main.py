@@ -32,6 +32,8 @@ def scrape_leaderboard(url_character_name: str, db_character_name: str):
 
         # Initialize a list to store all players across all pages
         all_scraped_players = []
+        # Set to track seen player IDs to prevent duplicates
+        seen_player_ids = set()
         current_page = 1
 
         while True:
@@ -40,9 +42,15 @@ def scrape_leaderboard(url_character_name: str, db_character_name: str):
             # Extract leaderboard data for the current page
             rows = page.query_selector_all("div.leaderboard-table tr[class^='rank']")
             for row in rows:
-                #Extract player id
+                # Extract player id
                 id_element = row.query_selector("a.profile")
                 player_id = id_element.get_attribute('href')[8:] if id_element else "Unknown"
+                
+                # Check if the player has already been added
+                if player_id in seen_player_ids:
+                    print(f"Duplicate found for player ID {player_id}, skipping...")
+                    continue
+                seen_player_ids.add(player_id)
 
                 # Extract player name
                 name_element = row.query_selector("div.name")
@@ -65,7 +73,7 @@ def scrape_leaderboard(url_character_name: str, db_character_name: str):
                 matches_text = matches_element.inner_text() if matches_element else "0 games"
                 matches_played = int(matches_text.split(" ")[0])  # Extract numeric value
 
-                # Add the player data to the list as a dictionary (even if they don't meet thresholds yet)
+                # Add the player data to the list
                 all_scraped_players.append({
                     "character_name": db_character_name,
                     "rank": None,  # Will assign ranks after sorting
