@@ -124,6 +124,9 @@ def scrape_leaderboard(url_character_name: str, db_character_name: str):
         else:
             print(f"Failed to update leaderboard for {db_character_name}: {response}")
 
+        # Clear seen players set
+        seen_player_ids.clear()
+        
         # Close the browser
         browser.close()
 
