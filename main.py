@@ -28,7 +28,7 @@ def scrape_leaderboard(url_character_name: str, db_character_name: str):
         page.goto(url)
 
         # Wait for the leaderboard table to load
-        page.wait_for_selector("div.leaderboard-table")
+        page.wait_for_selector("div.leaderboard-table", timeout=60000)
 
         # Initialize a list to store all players across all pages
         all_scraped_players = []
@@ -95,7 +95,7 @@ def scrape_leaderboard(url_character_name: str, db_character_name: str):
             if next_button:
                 next_button.click()
                 # Wait for the page content to update
-                page.wait_for_selector("div.leaderboard-table")
+                page.wait_for_selector("div.leaderboard-table", timeout=60000)
                 current_page += 1
             else:
                 # No "Next" button means we're on the last page
