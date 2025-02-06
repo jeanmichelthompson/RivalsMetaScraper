@@ -73,6 +73,11 @@ def scrape_leaderboard(url_character_name: str, db_character_name: str):
                 matches_text = matches_element.inner_text() if matches_element else "0 games"
                 matches_played = int(matches_text.split(" ")[0])  # Extract numeric value
 
+                # Extract winrate
+                winrate_element = row.query_selector("div.rate div.sum")
+                winrate_text = winrate_element.inner_text() if winrate_element else "0%"
+                winrate = float(winrate_text[:-1])  # Remove the percentage sign
+
                 # Add the player data to the list
                 all_scraped_players.append({
                     "character_name": db_character_name,
@@ -81,6 +86,7 @@ def scrape_leaderboard(url_character_name: str, db_character_name: str):
                     "rank_name": rank_name,
                     "score": rank_score,
                     "matches": matches_played,
+                    "winrate": winrate,
                     "player_id": player_id
                 })
 
@@ -126,7 +132,7 @@ def scrape_leaderboard(url_character_name: str, db_character_name: str):
 
         # Clear seen players set
         seen_player_ids.clear()
-        
+
         # Close the browser
         browser.close()
 
