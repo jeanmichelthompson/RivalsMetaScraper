@@ -172,7 +172,9 @@ characters = [
     ("loki", "Loki"),
     ("luna-snow", "Luna Snow"),
     ("mantis", "Mantis"),
-    ("rocket-raccoon", "Rocket Raccoon")
+    ("rocket-raccoon", "Rocket Raccoon"),
+    ("human-torch", "Human Torch"),
+    ("the-thing", "The Thing")
 ]
 
 # Run the scraper for all characters
