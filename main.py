@@ -81,7 +81,7 @@ def scrape_leaderboard(url_character_name: str, db_character_name: str):
                 # Add the player data to the list
                 all_scraped_players.append({
                     "character_name": db_character_name,
-                    "rank": None,  # Will assign ranks after sorting
+                    "rank": None,
                     "player_name": player_name,
                     "rank_name": rank_name,
                     "score": rank_score,
@@ -105,7 +105,7 @@ def scrape_leaderboard(url_character_name: str, db_character_name: str):
         # Filter out players who don't meet the thresholds
         filtered_players = [
             player for player in all_scraped_players
-            if player["matches"] >= 30 and player["score"] >= 4200
+            if player["matches"] >= 50 and player["score"] >= 4200 and player["winrate"] >= 50
         ]
 
         # Sort the filtered players by rank score in descending order
