@@ -124,7 +124,7 @@ def scrape_leaderboard(url_character_name: str, db_character_name: str):
 
         # Upsert the top 100 players into the database
         print(f"Upserting new leaderboard data for {db_character_name}...")
-        response = supabase.table("leaderboards").upsert(top_100_players).execute()
+        response = supabase.table("leaderboards").upsert(top_100_players,on_conflict=["character_name", "player_id"]).execute()
         if response.data:
             print(f"Leaderboard for {db_character_name} updated successfully!")
         else:
