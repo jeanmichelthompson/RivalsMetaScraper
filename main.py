@@ -183,6 +183,8 @@ characters = [
     ("rocket-raccoon", "Rocket Raccoon"),
     ("human-torch", "Human Torch"),
     ("the-thing", "The Thing")
+    ("emma-first", "Emma Frost")
+    ("ultron", "Ultron")
 ]
 
 # Run the scraper for all characters
