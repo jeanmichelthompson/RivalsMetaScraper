@@ -182,8 +182,8 @@ characters = [
     ("mantis", "Mantis"),
     ("rocket-raccoon", "Rocket Raccoon"),
     ("human-torch", "Human Torch"),
-    ("the-thing", "The Thing")
-    ("emma-first", "Emma Frost")
+    ("the-thing", "The Thing"),
+    ("emma-first", "Emma Frost"),
     ("ultron", "Ultron")
 ]
 
