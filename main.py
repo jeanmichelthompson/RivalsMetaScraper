@@ -1,4 +1,4 @@
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright, TimeoutError
 from supabase import create_client, Client
 import os
 
@@ -27,8 +27,13 @@ def scrape_leaderboard(url_character_name: str, db_character_name: str):
         print(f"Scraping leaderboard for {db_character_name} from {url}")
         page.goto(url)
 
-        # Wait for the leaderboard table to load
-        page.wait_for_selector("div.leaderboard-table", timeout=60000)
+        # Wait for the leaderboard table to load (skip if it never appears)
+        try:
+            page.wait_for_selector("div.leaderboard-table", timeout=60000)
+        except TimeoutError:
+            print(f"No leaderboard table found for {db_character_name} at {url}; skipping.")
+            browser.close()
+            return
 
         # Initialize a list to store all players across all pages
         all_scraped_players = []
@@ -183,7 +188,7 @@ characters = [
     ("rocket-raccoon", "Rocket Raccoon"),
     ("human-torch", "Human Torch"),
     ("the-thing", "The Thing"),
-    ("emma-first", "Emma Frost"),
+    ("emma-frost", "Emma Frost"),
     ("ultron", "Ultron")
 ]
 
