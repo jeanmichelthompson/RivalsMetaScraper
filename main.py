@@ -122,13 +122,21 @@ def scrape_leaderboard(url_character_name: str, db_character_name: str):
         print(f"Deleting old leaderboard data for {db_character_name}...")
         supabase.table("leaderboards").delete().eq("character_name", db_character_name).execute()
 
-        # Upsert the top 100 players into the database
-        print(f"Upserting new leaderboard data for {db_character_name}...")
-        response = supabase.table("leaderboards").upsert(top_100_players,on_conflict=["id"]).execute()
-        if response.data:
-            print(f"Leaderboard for {db_character_name} updated successfully!")
+        # Only upsert if there's actually data to insert
+        if not top_100_players:
+            print(f"No qualifying players for {db_character_name}; skipping upsert.")
         else:
-            print(f"Failed to update leaderboard for {db_character_name}: {response}")
+            print(f"Upserting new leaderboard data for {db_character_name}…")
+            response = supabase.table("leaderboards") \
+                .upsert(
+                    top_100_players,
+                    on_conflict=["id"]
+                ) \
+                .execute()
+            if response.data:
+                print(f"Leaderboard for {db_character_name} updated successfully!")
+            else:
+                print(f"Failed to update leaderboard for {db_character_name}: {response}")
 
         # Clear seen players set
         seen_player_ids.clear()
