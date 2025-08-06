@@ -169,6 +169,7 @@ characters = [
     ("mister-fantastic", "Mister Fantastic"),
     ("moon-knight", "Moon Knight"),
     ("namor", "Namor"),
+    ("phoenix", "Phoenix"),
     ("psylocke", "Psylocke"),
     ("scarlet-witch", "Scarlet Witch"),
     ("spider-man", "Spider Man"),
